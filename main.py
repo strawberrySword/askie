@@ -22,56 +22,44 @@ st.set_page_config(
 st.markdown("""
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Rubik', sans-serif !important;
-        }
-        body {
-            background-color: #F7F7F7;
-            color: #333333;
-        }
-        .main {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(79, 109, 122, 0.1);
-        }
-        h1, h3, .stRadio, .stTextInput label {
-            font-size: 1.5rem !important;
-            text-align: right;
-            direction: rtl;
-        }
-        .stButton>button {
-            background-color: #A2D2FF;
-            color: #333333;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            padding: 0.5rem 1.5rem;
-        }
-        .stButton>button:hover {
-            background-color: #FF9E9E;
-            color: white;
-        }
-        .logo-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 1.5rem;
-        }
-        .logo-header img {
-            max-height: 60px;
-        }
+    * {
+        font-family: 'Rubik', sans-serif !important;
+    }
+    body {
+        background-color: #F7F7F7;
+        color: #333333;
+    }
+    .main {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(79, 109, 122, 0.1);
+    }
+    h1, h3, .stRadio, .stTextInput label {
+        font-size: 1.5rem !important;
+        text-align: right;
+        direction: rtl;
+    }
+    .stButton>button {
+        background-color: #A2D2FF;
+        color: #333333;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+    }
+    .stButton>button:hover {
+        background-color: #FF9E9E;
+        color: white;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Logo + Title (inline)
-st.markdown("""
-    <div class='logo-header'>
-        <img src='./assets/brand/logo.png' alt='Askie Logo'>
-        <h1>ברוכים הבאים לאסקי</h1>
-    </div>
-""", unsafe_allow_html=True)
+
+_, _, col, _, _ = st.columns([1,1,1,1,1])
+with col:
+    st.image("./assets/brand/logo.png", width=200, use_container_width=False)
+st.title("ברוכים הבאים לאסקי")
 
 # Session defaults
 if "role" not in st.session_state:
@@ -90,9 +78,8 @@ else:
     user_name = None
 
 # Login button logic
-if st.button("כניסה"):
+if st.button("כניסה", use_container_width=True):
     st.session_state.role = role
-
     if role == "תלמיד":
         if not user_name.strip():
             st.error("אנא הכנס שם משתמש.")

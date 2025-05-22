@@ -106,30 +106,6 @@ def main():
             with st.chat_message("user"):
                 st.markdown(prompt)
 
-<<<<<<< HEAD
-            character_responses = {
-                "Golda Meir" : f'תשובה של גולדה מאיר',
-                "David Ben-Gurion": f"תשובה של דוד בן גוריון",
-                "Herzel" : f'תשובה של הרצל',
-            }
-            
-            response = character_responses.get(selected_character, f"{selected_character} says: That's an interesting point about {prompt}!")
-            
-            # Show typing effect
-            with st.chat_message("assistant"):
-                typing_container = st.empty()
-                
-                # Show typing indicator first
-                typing_container.markdown("*typing...*")
-                time.sleep(1)  # Brief pause before typing starts
-                
-                # Simulate typing
-                simulate_typing(response, typing_container)
-            
-            # Add character response to chat history AFTER typing is complete
-            st.session_state[f"messages_{selected_character}"].append({"role": "assistant", "content": response})
-            
-=======
             try:
                 # Get response from the character's RAG system
                 response = session.ask(prompt)
@@ -156,7 +132,6 @@ def main():
                 st.session_state[f"messages_{selected_character}"].append(
                     {"role": "assistant", "content": fallback_response})
 
->>>>>>> main
             # Rerun to update the chat display
             st.rerun()
 

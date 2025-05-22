@@ -71,6 +71,10 @@ def main():
             if st.button("← Back to Gallery"):
                 st.switch_page("./pages/student.py")
 
+            # Add a quiz button
+            if st.button("To quiz →"):
+                st.switch_page("./pages/quiz.py")
+
         # Initialize conversation session for this character
         if f"session_{selected_character}" not in st.session_state:
             try:

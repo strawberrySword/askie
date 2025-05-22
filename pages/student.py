@@ -1,124 +1,160 @@
+# student.py
 import streamlit as st
+from streamlit.components.v1 import html
 
 st.set_page_config( 
-    page_title="Student | Askie",
+    page_title="Characters | Askie",
     page_icon="./assets/brand/logo.png",
-    layout="wide"
+    layout="centered"
 )
 
-# Check access
-if "role" not in st.session_state or st.session_state.role != "student":
-    st.error("Access denied. Please log in as a student.")
-    st.stop()
 
-# st.title("🎓 Student Page")
-# st.write(f"Welcome, **{st.session_state.name}**!")
+# Custom CSS for gallery styling
+st.markdown("""
+<style>
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
 
-# if st.button("Logout"):
-#     st.session_state.clear()
-#     st.switch_page("main.py")
+.gallery-item {
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
+.gallery-item:hover {
+    transform: scale(1.05);
+}
 
-# Custom CSS for the gallery
-st.markdown(
-    """
-    <style>
-    .gallery-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-    }
-    .gallery-item {
-        position: relative;
-        width: 32%;                 /* Three items per row with small gaps */
-        overflow: hidden;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        cursor: pointer;
-        text-align: center;
-    }
-    .gallery-item img {
-        width: 100%;
-        height: auto;
-        display: block;
-        transition: transform 0.3s ease;
-    }
-    .gallery-item:hover img {
-        transform: scale(1.05);
-    }
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        color: #FFF;
-        opacity: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 500;
-        transition: opacity 0.3s ease;
-    }
-    .gallery-item:hover .overlay {
-        opacity: 1;
-    }
-    /* Make sure links don’t inherit unwanted styling */
-    .gallery-item a {
-        color: inherit;
-        text-decoration: none;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+.gallery-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
 
-st.title("🎨 Streamlit Gallery Demo")
-st.write("Hover over each image to see the overlay text. Click anywhere on the card to follow the link.")
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 15px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
 
-# Sample data for 2 rows (6 items). Each dict has: image URL, overlay text, and target URL.
-items = [
-    {
-        "img_url": "bob.png",
-        "title": "Item 1",
-        "link": "https://example.com/1",
-    },
-    {
-        "img_url": "pat.png",
-        "title": "Item 2",
-        "link": "https://example.com/2",
-    },
-    {
-        "img_url": "squid.jpg",
-        "title": "Item 3",
-        "link": "https://example.com/3",
-    },
-    {
-        "img_url": "krabs.png",
-        "title": "Item 4",
-        "link": "https://example.com/4",
-    },
-    {
-        "img_url": "bob.png",
-        "title": "Item 5",
-        "link": "https://example.com/5",
-    },
-    {
-        "img_url": "squid.jpg",
-        "title": "Item 6",
-        "link": "https://example.com/6",
-    },
-]
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
 
-# Break into rows of 3
-rows = [items[i : i + 3] for i in range(0, len(items), 3)]
+.gallery-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# Render each row
-for row in rows:
-    cols = st.columns(3, gap="small")
-    for col, item in zip(cols, row):
+def create_gallery():
+    # Sample gallery data - replace with your actual data
+    gallery_items = [
+        {
+            "image_url": "https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Character+1",
+            "character": "Wizard Merlin",
+            "description": "Ancient wizard with mystical powers"
+        },
+        {
+            "image_url": "https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Character+2", 
+            "character": "Knight Arthur",
+            "description": "Noble knight of the round table"
+        },
+        {
+            "image_url": "https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=Character+3",
+            "character": "Rogue Shadow",
+            "description": "Stealthy assassin from the shadows"
+        },
+        {
+            "image_url": "https://via.placeholder.com/300x200/96CEB4/FFFFFF?text=Character+4",
+            "character": "Elf Archer",
+            "description": "Swift archer with keen eyes"
+        },
+        {
+            "image_url": "https://via.placeholder.com/300x200/FFEAA7/000000?text=Character+5",
+            "character": "Dragon Slayer",
+            "description": "Fearless warrior who hunts dragons"
+        },
+        {
+            "image_url": "https://via.placeholder.com/300x200/DDA0DD/000000?text=Character+6",
+            "character": "Mystic Oracle",
+            "description": "Seer who knows the future"
+        }
+    ]
+    
+    st.title("Character Gallery")
+    st.write("Hover over characters to see descriptions, click to chat!")
+    
+    # Create columns for gallery layout
+    cols = st.columns(3)  # Adjust number of columns as needed
+    
+    for idx, item in enumerate(gallery_items):
+        col = cols[idx % 3]  # Cycle through columns
+        
         with col:
-            st.image(item["img_url"], caption=item["title"], use_container_width=True)
+            # Display clickable image with custom HTML for hover effect
+            html_content = f"""
+            <div class="gallery-item" onclick="window.parent.postMessage({{type: 'streamlit:setComponentValue', value: '{item['character']}'}}, '*')">
+                <img src="{item['image_url']}" alt="{item['character']}" class="gallery-image">
+                <div class="gallery-overlay">
+                    <p class="gallery-text">{item['character']}</p>
+                    <p style="font-size: 12px; margin: 5px 0 0 0;">{item['description']}</p>
+                </div>
+            </div>
+            """
+            
+            # Create the HTML component with click handling
+            clicked_character = html(html_content, height=220, key=f"gallery_{idx}")
+            
+            # Check if this item was clicked
+            if clicked_character == item['character']:
+                st.session_state.character = item['character']
+                st.switch_page("chat.py")
+
+# Alternative implementation using pure Streamlit (if the above doesn't work)
+def create_simple_gallery():
+    
+    characters = [
+        {"name": "Wizard Merlin", "image": "bob.png"},
+        {"name": "Knight Arthur", "image": "krabs.png"},
+        {"name": "Rogue Shadow", "image": "pat.png"},
+        {"name": "Elf Archer", "image": "squid.jpg"},
+    ]
+    
+    cols = st.columns(2)
+    
+    for idx, char in enumerate(characters):
+        col = cols[idx % 2]
+        
+        with col:
+            # Make the image itself clickable using image click detection
+            clicked = st.image("./assets/cards/"+char["image"], caption=char["name"], use_container_width=True)
+            
+            # Create an invisible button overlay for click detection
+            if st.button(f"🎭", key=f"chat_{idx}", help=f"Chat with {char['name']}"):
+                st.session_state.character = char["name"]
+                st.switch_page("./pages/chat.py")
+
+if __name__ == "__main__":
+    # Use the fancy gallery if possible, fallback to simple version
+    try:
+        create_gallery()
+    except:
+        create_simple_gallery()
+

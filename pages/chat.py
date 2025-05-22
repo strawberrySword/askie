@@ -10,6 +10,13 @@ def main():
     # Get the selected character from session state
     if "character" in st.session_state:
         selected_character = st.session_state.character
+
+        with st.sidebar:
+            imgname = selected_character.lower().split(' ')[0]
+            st.image(f"./assets/cards/{imgname}.png", use_container_width=True)
+            st.write(f"**{selected_character}**")
+
+
         st.success(f"Now chatting with: **{selected_character}**")
         
         # Add a back button
@@ -42,12 +49,6 @@ def main():
                 "Golda Meir" : f'lmfao *smokes a cigar* "You know, {prompt} reminds me of the time I had to make a tough decision..."',
                 "David Ben-Gurion": f"*leans back in chair* Ah, {prompt}... Sde boker is shit af man...",
                 "Herzel" : f'Yo balcony vibes, {prompt}...',
-                "Wizard Merlin": f"*adjusts pointed hat* Ah, young one, you seek wisdom? {prompt} is indeed a curious matter...",
-                "Knight Arthur": f"*raises sword honorably* By the code of chivalry, I say {prompt} requires courage and honor!",
-                "Rogue Shadow": f"*whispers from the shadows* {prompt}? Interesting... few know of such things...",
-                "Elf Archer": f"*notches arrow gracefully* The forest spirits tell me that {prompt} is worth considering...",
-                "Dragon Slayer": f"*hefts mighty weapon* {prompt}? Ha! I've faced fiercer challenges than that!",
-                "Mystic Oracle": f"*gazes into crystal ball* The future reveals that {prompt} will lead to great changes..."
             }
             
             response = character_responses.get(selected_character, f"{selected_character} says: That's an interesting point about {prompt}!")

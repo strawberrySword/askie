@@ -65,12 +65,11 @@ def main():
             st.session_state[f"messages_{selected_character}"].append({"role": "user", "content": prompt})
             with st.chat_message("user"):
                 st.markdown(prompt)
-            
-            # Generate character response
+
             character_responses = {
-                "Golda Meir": f'lmfao *smokes a cigar* "You know, {prompt} reminds me of the time I had to make a tough decision..."',
-                "David Ben-Gurion": f"*leans back in chair* Ah, {prompt}... Sde boker is shit af man...",
-                "Herzel": f'Yo balcony vibes, {prompt}...',
+                "Golda Meir" : f'תשובה של גולדה מאיר',
+                "David Ben-Gurion": f"תשובה של דוד בן גוריון",
+                "Herzel" : f'תשובה של הרצל',
             }
             
             response = character_responses.get(selected_character, f"{selected_character} says: That's an interesting point about {prompt}!")

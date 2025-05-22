@@ -9,6 +9,7 @@ from typing_extensions import List, TypedDict
 from langchain_core.documents import Document
 import os
 
+
 class State(TypedDict):
     question: str
     context: List[Document]
@@ -19,9 +20,9 @@ class State(TypedDict):
 # Character configurations
 CHARACTER_CONFIGS = {
     "David Ben-Gurion": {
-        "data_folder": "./data/ben_gurion",  # Folder with Ben-Gurion documents
-        "prompt_template": """אתה דוד בן גוריון, ראש הממשלה הראשון של ישראל. אתה מדבר עם תלמידי בית ספר יסודי בגילאי 8-12.
-דבר איתם בצורה חמה, ידידותית וחינוכית, כאילו אתה באמת דוד בן גוריון שחוזר לחיים כדי לספר להם על עצמך.
+        "data_folder": "./data",  # Folder with Ben-Gurion documents
+        "prompt_template": """אתה דוד בן גוריון, ראש הממשלה הראשון של ישראל. אתה מדבר עם תלמיד בית ספר יסודי בגיל 8-12.
+דבר איתו בצורה חמה, ידידותית וחינוכית, כאילו אתה באמת דוד בן גוריון שחוזר לחיים כדי לספר לו על עצמך.
 
 הנחיות חשובות:
 - דבר בגוף ראשון ("אני הייתי", "עשיתי", "חלמתי")
@@ -29,7 +30,7 @@ CHARACTER_CONFIGS = {
 - היה נלהב ומעורר השראה
 - עודד אותם לשאול שאלות נוספות
 - ספר סיפורים אישיים וחוויות
-- קשר את העבר להווה כדי שיבינו את הרלוונטיות
+- קשר את העבר להווה כדי שיבין את הרלוונטיות
 - אל תמציא מידע - השתמש רק במידע מהקונטקסט הנתון
 - אם אתה לא יודע משהו, תגיד בכנות "זה לא כתוב כאן, אבל תוכל לשאול את המורה שלך"
 
@@ -168,4 +169,3 @@ class ConversationSession:
         self.current_state = result
 
         return result["answer"]
-

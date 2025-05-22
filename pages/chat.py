@@ -22,7 +22,7 @@ def get_conversation_session(character_name):
     return ConversationSession(character_name)
 
 
-def simulate_typing(text, container):
+def simulate_typing(text, container, img_placeholder, name):
     """Simulate typing effect by revealing text character by character"""
     displayed_text = ""
     placeholder = container.empty()
@@ -30,9 +30,17 @@ def simulate_typing(text, container):
     # Add some initial delay
     time.sleep(0.1)
 
+    i = 0
+    lastimg = 0
+
     for char in text:
         displayed_text += char
         placeholder.markdown(displayed_text + "▋")  # Add cursor
+
+        if i % 5 == 0:
+            imgname = name if lastimg != 0 else name+"2"
+            img_placeholder.image(f"./assets/cards/{imgname}.png", use_container_width=True)
+            lastimg = 1-lastimg
 
         # Variable speed typing - faster for spaces, slower for punctuation
         if char == ' ':
@@ -42,6 +50,7 @@ def simulate_typing(text, container):
         else:
             time.sleep(0.03)  # Normal speed for letters
 
+        i += 1
     # Remove cursor and show final text
     placeholder.markdown(displayed_text)
 
@@ -53,7 +62,9 @@ def main():
 
         with st.sidebar:
             imgname = selected_character.lower().split(' ')[0]
-            st.image(f"./assets/cards/{imgname}.png", use_container_width=True)
+            img_placeholder = st.empty()
+            img_placeholder.image(f"./assets/cards/{imgname}.png", use_container_width=True)
+
             st.success(f"Now chatting with: **{selected_character}**")
 
             # Add a back button
@@ -104,7 +115,7 @@ def main():
                     time.sleep(1)  # Brief pause before typing starts
 
                     # Simulate typing
-                    simulate_typing(response, typing_container)
+                    simulate_typing(response, typing_container, img_placeholder, imgname)
 
                 # Add character response to chat history AFTER typing is complete
                 st.session_state[f"messages_{selected_character}"].append(

@@ -3,6 +3,7 @@ from supabase import create_client
 from dotenv import load_dotenv
 import os
 
+
 # Load env vars
 load_dotenv()
 
@@ -17,6 +18,8 @@ st.set_page_config(
     page_icon="./assets/brand/logo.png",
     layout="centered"
 )
+
+
 
 # Custom CSS: Rubik font, larger text, better layout
 st.markdown("""
@@ -35,22 +38,40 @@ st.markdown("""
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(79, 109, 122, 0.1);
     }
-    h1, h3, .stRadio, .stTextInput label {
-        font-size: 1.5rem !important;
+    h3, .stRadio, .stTextInput label {
+        font-size: 2.5rem !important;
         text-align: right;
         direction: rtl;
+    }
+    h1{
+        font-size: 4rem !important;
+        text-align: right;
+        direction: rtl;        
     }
     .stButton>button {
         background-color: #A2D2FF;
         color: #333333;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 2rem;
         border-radius: 8px;
         padding: 0.5rem 1.5rem;
     }
     .stButton>button:hover {
         background-color: #FF9E9E;
         color: white;
+    }
+    /* גודל כפתורי רדיו (תלמיד / מורה) */
+    .stRadio > div {
+    font-size: 3rem !important;
+    direction: rtl;
+    text-align: right;
+    }
+
+    /* גודל תווית של text_input (הכנס שם משתמש) */
+    .stTextInput > label {
+    font-size: 1.3rem !important;
+    direction: rtl;
+    text-align: right;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -59,7 +80,7 @@ st.markdown("""
 _, _, col, _, _ = st.columns([1,1,1,1,1])
 with col:
     st.image("./assets/brand/logo.png", width=200, use_container_width=False)
-st.title("ברוכים הבאים לאסקי")
+st.markdown("<h1 style='font-size: 5rem; text-align: right; direction: rtl;'>ברוכים הבאים לאסקי</h1>", unsafe_allow_html=True)
 
 # Session defaults
 if "role" not in st.session_state:
@@ -69,7 +90,7 @@ if "name" not in st.session_state:
 
 # Role selection (in Hebrew, larger)
 st.markdown("### התחברות", unsafe_allow_html=True)
-role = st.radio("", ["תלמיד", "מורה"], horizontal=True, label_visibility="collapsed")
+role = st.radio("בחר תפקיד", ["תלמיד", "מורה"], horizontal=True, label_visibility="collapsed")
 
 # Input (username)
 if role == "תלמיד":

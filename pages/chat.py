@@ -140,6 +140,9 @@ def main():
 
             # Add a back button
             if st.button("← Back to Gallery"):
+                me = st.session_state.student_id
+                st.session_state.clear()
+                st.session_state.student_id = me
                 st.switch_page("./pages/student.py")
 
             # Add a quiz button

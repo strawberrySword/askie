@@ -146,7 +146,9 @@ if __name__ == '__main__':
             st.switch_page("./pages/chat.py")
     with c2:
         if st.button('Back to Gallery', use_container_width=True):
-            st.session_state.character = None
+            me = st.session_state.student_id
+            st.session_state.clear()
+            st.session_state.student_id = me
             st.switch_page("./pages/student.py")
 
 

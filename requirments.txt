@@ -189,7 +189,7 @@ statsd==4.0.1
 storage3==0.11.3
 streamlit==1.45.1
 StrEnum==0.4.15
-supabase==2.15.1
+supabase==2.8.0
 supafunc==0.9.4
 tenacity==8.5.0
 text-unidecode==1.3

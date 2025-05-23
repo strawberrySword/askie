@@ -35,11 +35,11 @@ def get_user_id():
 
 def load_conversation_from_db(supabase: Client, user_id: str, character_name: str):
     """Load existing conversation from database"""
-    if character_name.equals("David Ben-Gurion"):
+    if character_name == "David Ben-Gurion":
         char_id = 0
-    elif character_name.equals("Golda Meir"):
+    elif character_name == "Golda Meir":
         char_id = 1
-    elif character_name.equals("Herzel"):
+    elif character_name == "Herzel":
         char_id = 2
 
     user_id = int(user_id)

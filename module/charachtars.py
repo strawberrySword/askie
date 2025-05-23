@@ -20,7 +20,7 @@ class State(TypedDict):
 # Character configurations
 CHARACTER_CONFIGS = {
     "David Ben-Gurion": {
-        "data_folder": "./data",  # Folder with Ben-Gurion documents
+        "data_folder": os.path.join("data", "dbg.txt"),  # Folder with Ben-Gurion documents
         "prompt_template": """אתה דוד בן גוריון, ראש הממשלה הראשון של ישראל. אתה מדבר עם תלמיד בית ספר יסודי בגיל 8-12.
 דבר איתו בצורה חמה, ידידותית וחינוכית, כאילו אתה באמת דוד בן גוריון שחוזר לחיים כדי לספר לו על עצמך.
 
@@ -95,11 +95,8 @@ class ConversationSession:
         docs = []
         data_folder = config["data_folder"]
 
-        if os.path.exists(data_folder):
-            for filename in os.listdir(data_folder):
-                if filename.endswith(".txt"):
-                    loader = TextLoader(os.path.join(data_folder, filename))
-                    docs.extend(loader.load())
+        loader = TextLoader(data_folder)
+        docs.extend(loader.load())
 
         # Split and index documents
         if docs:

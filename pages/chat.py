@@ -26,14 +26,11 @@ def get_conversation_session(character_name):
 
 def get_user_id():
     """Get or create a user ID for this session"""
-    if "user_id" not in st.session_state:
-        # In a real app, you'd have proper authentication
-        # For now, we'll use a simple session-based ID
-        import uuid
-        st.session_state.user_id = str(uuid.uuid4())
-    return st.session_state.user_id
+    if "student_id" not in st.session_state:
+        st.session_state.student_id = 0
+    return st.session_state.student_id
 
-def load_conversation_from_db(supabase: Client, user_id: str, character_name: str):
+def load_conversation_from_db(supabase: Client, user_id: int, character_name: str):
     """Load existing conversation from database"""
     if character_name == "David Ben-Gurion":
         char_id = 0
@@ -41,8 +38,6 @@ def load_conversation_from_db(supabase: Client, user_id: str, character_name: st
         char_id = 1
     elif character_name == "Herzel":
         char_id = 2
-
-    user_id = int(user_id)
 
     try:
         response = supabase.table("chats").select("*").eq("student_id", user_id).eq("character_id", char_id).execute()
@@ -77,11 +72,11 @@ def load_conversation_from_db(supabase: Client, user_id: str, character_name: st
         st.error(f"Error loading conversation: {e}")
         return None, []
 
-def save_message_to_db(supabase: Client, conversation_id: str, role: str, content: str):
+def save_message_to_db(supabase: Client, conversation_id: int, role: str, content: str):
     """Save a message to the database"""
     try:
         supabase.table("messages").insert({
-            "chat_id": int(conversation_id),
+            "chat_id": conversation_id,
             "sender_role": role,
             "content": content,
             "created_at": datetime.now().isoformat()
